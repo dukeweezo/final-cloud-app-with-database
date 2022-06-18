@@ -136,6 +136,24 @@ def extract_answers(request):
         # For each selected choice, check if it is a correct answer or not
         # Calculate the total score
 def show_exam_result(request, course_id, submission_id):
+    course = Course.objects.get(id=submission_id)
+    enrollment = Enrollment.objects.get(id=submission_id)
+    choices = enrollment.choices.all()
+
+    question = choices.question
+
+    scores = []
+    final_score = 0
+
+    if question.is_get_score(choices):
+        scores.append(question.question_grade)
+
+    for score in scores:
+        final_score += score[0]
+        
+
+    
+
 
 
 
