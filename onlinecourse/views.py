@@ -143,25 +143,22 @@ def show_exam_result(request, course_id, submission_id):
     submission = Submission.objects.get(id=submission_id)
     choices = submission.choices.all()
 
-    print('-------------------------')
-    for entry in choices:
-         print(choices.values())
-    print('-------------------------')
+    selected_choice_ids = choices.values_list('id', flat=True)
 
-    selected_ids = choices.values_list('id', flat=True)
+    selected_question_ids = choices.values_list('question_id', flat=True)
+    selected_question_ids = list(set(selected_question_ids))
 
-    question = Question.objects.get(id=choices[0].question_id)
-    
     scores = []
-    final_score = 0
+    score_tally = 0
     correct_answers = 0
 
-    if question.is_get_score(selected_ids):
-        scores.append(int(question.question_grade))
+    for question_id in selected_question_ids:
+        question = Question.objects.get(id=question_id)
+        
+        if question.is_get_score(selected_choice_ids):
+            scores_tally += 1
 
-    for score in scores:
-        correct_answers
-        final_score += score
+    final_score = (score_tally / Question.objects.all().count()) * 100
 
     context['course'] = course
     context['selected_ids'] = choices
