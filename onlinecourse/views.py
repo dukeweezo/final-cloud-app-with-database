@@ -8,6 +8,8 @@ from django.urls import reverse
 from django.views import generic
 from django.contrib.auth import login, logout, authenticate
 import logging
+import json
+
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 # Create your views here.
@@ -137,19 +139,24 @@ def extract_answers(request):
         # Calculate the total score
 def show_exam_result(request, course_id, submission_id):
     context = {}
-    course = Course.objects.get(id=submission_id)
-    enrollment = Enrollment.objects.get(id=submission_id)
-    choices = enrollment.choices.all()
-    
+    course = Course.objects.get(id=course_id)
+    submission = Submission.objects.get(id=submission_id)
+    choices = submission.choices.all()
+
+    print('-------------------------')
+    for entry in choices:
+         print(choices.values())
+    print('-------------------------')
+
     selected_ids = choices.values_list('id', flat=True)
 
-    question = choices.question
-
+    question = Question.objects.get(id=choices[0].question_id)
+    
     scores = []
     final_score = 0
 
     if question.is_get_score(selected_ids):
-        scores.append(question.question_grade)
+        scores.append(int(question.question_grade))
 
     for score in scores:
         final_score += score[0]
