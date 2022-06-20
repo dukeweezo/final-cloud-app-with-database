@@ -156,7 +156,7 @@ def show_exam_result(request, course_id, submission_id):
         question = Question.objects.get(id=question_id)
         
         if question.is_get_score(selected_choice_ids):
-            scores_tally += 1
+            score_tally += 1
 
     final_score = (score_tally / Question.objects.all().count()) * 100
 
