@@ -102,17 +102,9 @@ class Enrollment(models.Model):
     # Has question content
     # Other fields and methods you would like to design
 class Question(models.Model):
-    GRADES = [
-        ('90', 'A'),
-        ('80', 'B'),
-        ('70', 'C'),
-        ('60', 'D'),
-        ('59', 'F')
-    ]
-
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     question_text = models.TextField()
-    question_grade = models.CharField(max_length=3, choices=GRADES, default='90')
+    question_grade = models.FloatField(default=1.0)
 
     
     # Foreign key to lesson

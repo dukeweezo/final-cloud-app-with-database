@@ -154,12 +154,14 @@ def show_exam_result(request, course_id, submission_id):
     
     scores = []
     final_score = 0
+    correct_answers = 0
 
     if question.is_get_score(selected_ids):
         scores.append(int(question.question_grade))
 
     for score in scores:
-        final_score += score[0]
+        correct_answers
+        final_score += score
 
     context['course'] = course
     context['selected_ids'] = choices
