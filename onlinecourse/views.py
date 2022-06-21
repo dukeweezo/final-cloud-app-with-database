@@ -141,7 +141,16 @@ def show_exam_result(request, course_id, submission_id):
     context = {}
     course = Course.objects.get(id=course_id)
     submission = Submission.objects.get(id=submission_id)
-    choices = submission.choices.all()
+    selected_choices = submission.choices.all()
+    all_choices = Choice.objects.all().values()
+    all_questions = Question.objects.all().values()
+    print('+++++++++++')
+    print(selected_choices)
+    print('+++++++++++')
+    print('------------')
+    print(all_choices)
+    print('------------')
+
     """
         Get all choices of Question (question.choice_set?)
         Pass all_choices to view
@@ -159,9 +168,9 @@ def show_exam_result(request, course_id, submission_id):
                     if false then write answer in black
                     ( Incorrect answer, correctly not selected )
     """
-    selected_choice_ids = choices.values_list('id', flat=True)
+    selected_choice_ids = selected_choices.values_list('id', flat=True)
 
-    selected_question_ids = choices.values_list('question_id', flat=True)
+    selected_question_ids = selected_choices.values_list('question_id', flat=True)
     selected_question_ids = list(set(selected_question_ids))
 
     scores = []
@@ -170,14 +179,17 @@ def show_exam_result(request, course_id, submission_id):
 
     for question_id in selected_question_ids:
         question = Question.objects.get(id=question_id)
-        
+     
         if question.is_get_score(selected_choice_ids):
             score_tally += 1
 
     final_score = (score_tally / Question.objects.all().count()) * 100
 
     context['course'] = course
-    context['selected_ids'] = choices
+    context['selected_choices'] = selected_choices
+    context['all_choices'] = all_choices
+    #context['all_questions'] = all_questions
+
     context['final_score'] = final_score
 
     return render(request, 'onlinecourse/exam_result_bootstrap.html', context)

@@ -38,7 +38,7 @@
 <div class="container-fluid">
     {% if final_score > 80 %}
     <div class="alert alert-success">
-        <p>{{final_score}} / 100.0</p>
+        <p><b>Congratulations, {{user.username}}!</b> You have passed the exam and completed the course with the score {{final_score}} / 100.0</p>
 
        <!--HINT Display passed info -->
     </div>
@@ -50,7 +50,31 @@
         {% endif %}
         <div class="card-columns-vertical mt-1">
         <h5 class="">Exam results</h5>
-            <!--HINT Display exam results-->
+        {% for lesson in course.lesson_set.all %}
+            {% for question in lesson.question_set.all %}
+                <div class="card mt-1">
+                    <div class="card-header"><h5>{{ question.question_text}}</h5></div>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {% for every_choice in all_choices %}
+                            {% if every_choice.question_id == question.id %}
+                                <br/>{{ every_choice.choice_text }}
+                                {% for selected_choice in selected_choices %}
+                                    {% if selected_choice.id == every_choice.id %}
+                                        {% if selected_choice.is_correct %}
+                                            <span style='color: green'>- Correct answer!</span>
+                                        {% else %}
+                                            <span style='color: red'>- Incorrect answer!</span>
+                                        {% endif %}
+                                    {% else %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
         </div>
     </div>
 </body>
