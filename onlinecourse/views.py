@@ -144,12 +144,6 @@ def show_exam_result(request, course_id, submission_id):
     selected_choices = submission.choices.all()
     all_choices = Choice.objects.all().values()
     all_questions = Question.objects.all().values()
-    print('+++++++++++')
-    print(selected_choices)
-    print('+++++++++++')
-    print('------------')
-    print(all_choices)
-    print('------------')
 
     """
         Get all choices of Question (question.choice_set?)
@@ -181,6 +175,7 @@ def show_exam_result(request, course_id, submission_id):
         question = Question.objects.get(id=question_id)
      
         if question.is_get_score(selected_choice_ids):
+            print("is_get_score")
             score_tally += 1
 
     final_score = (score_tally / Question.objects.all().count()) * 100

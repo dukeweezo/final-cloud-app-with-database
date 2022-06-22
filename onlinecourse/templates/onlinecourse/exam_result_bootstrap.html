@@ -39,12 +39,10 @@
     {% if final_score > 80 %}
     <div class="alert alert-success">
         <p><b>Congratulations, {{user.username}}!</b> You have passed the exam and completed the course with the score {{final_score}} / 100.0</p>
-
-       <!--HINT Display passed info -->
     </div>
         {% else %}
         <div class="alert alert-danger">
-            <p>{{final_score}} / 100.0</p>
+            <p><b>Failed</b> Sorry, {{user.username}}! You have failed with a score of {{final_score}} / 100.0</p>
         </div>
         <a class="btn btn-link text-danger" href="{% url 'onlinecourse:course_details' course.id %}">Re-test</a>
         {% endif %}

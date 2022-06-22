@@ -106,7 +106,6 @@ class Question(models.Model):
     question_text = models.TextField()
     question_grade = models.FloatField(default=1.0)
 
-    
     # Foreign key to lesson
     # question text
     # question grade/mark
@@ -114,8 +113,10 @@ class Question(models.Model):
     # <HINT> A sample model method to calculate if learner get the score of the question
     def is_get_score(self, selected_ids):
         all_answers = self.choice_set.filter(is_correct=True).count()
-        selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
-        if all_answers == selected_correct:
+        selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()     
+        selected_incorrect = self.choice_set.filter(is_correct=False, id__in=selected_ids).count()
+      
+        if all_answers == selected_correct and not selected_incorrect:
             return True
         else:
             return False
