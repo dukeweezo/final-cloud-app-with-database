@@ -54,10 +54,8 @@
             <!-- <HINT> Use Bootstrap Collapse to hide exam first, more details could be found here
             https://www.w3schools.com/bootstrap4/bootstrap_collapse.asp-->
 
-                
+            <button data-toggle="collapse" data-target="#exam" type="button" class="btn btn-success btn-block">Start Exam</button>
             <div id="exam" class="collapse">
-                Click to expand elements within the collapse div
-            </div>
             {% if user.is_authenticated %}
                 <form id="questionform" action="{% url 'onlinecourse:submit' course.id %}" method="post">
 
@@ -83,6 +81,8 @@
                 {% endfor %}
                 <input class="btn btn-success btn-block" type="submit" value="Submit">
                 </form>
+                <br/><br/>
+            </div>
             {% else %}
                 <p>Not Authenticated</p>
             {% endif %}

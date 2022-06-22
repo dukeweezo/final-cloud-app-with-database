@@ -145,23 +145,6 @@ def show_exam_result(request, course_id, submission_id):
     all_choices = Choice.objects.all().values()
     all_questions = Question.objects.all().values()
 
-    """
-        Get all choices of Question (question.choice_set?)
-        Pass all_choices to view
-        Pass selected_choices to view
-        Iterate through all_choices; 
-            can compare ids? to see if the all_choice == selected_choice
-                if so, check is_correct, 
-                    if true then write "Correct answer", green, etc.
-                    ( Correct answer, correctly selected )
-                    else "Incorrect", e.g., red, etc.
-                    ( Incorrect answer, incorrectly selected )
-                if not, check is_correct,
-                    if true then write "Not selected", yellow, etc.
-                    ( Correct answer, incorrectly not selected )
-                    if false then write answer in black
-                    ( Incorrect answer, correctly not selected )
-    """
     selected_choice_ids = selected_choices.values_list('id', flat=True)
 
     selected_question_ids = selected_choices.values_list('question_id', flat=True)
